@@ -75,7 +75,8 @@ class LessCSS:
         if not less or not os.path.exists(less):
             raise ValueError("Less CSS Processor cannot be found at [%s]" % less)
         try:
-            check_call([less, resource.source_file.path, out_file.path])
+            check_call([less, "--include-path=" + settings.LESS_MIXINS, resource.source_file.path, out_file.path],
+                cwd=settings.MEDIA_DIR)
         except CalledProcessError, e:
             print 'Syntax Error when calling less:', e
         else:
